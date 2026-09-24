@@ -117,7 +117,9 @@ The Azure Ubuntu VM should have:
 
     An existing Kind cluster
 
-    Argo CD installed in namespace argocd
+    Argo CD installed in namespace argocd ( to install Argocd refer the video link and Chapters in description - https://www.youtube.com/watch?v=B0bTEeM34DU&t=3713s)
+
+    https://github.com/LondheShubham153/argocd-in-one-shot/blob/main/03_setup_installation/setup_argocd.sh
 
     A DNS domain that you control
 
