@@ -1,0 +1,31 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  entryPoints:
+    - websecure
+
+  routes:
+
+    # Normal HTTPS/UI traffic
+    - kind: Rule
+      match: Host(`argocd.yogifoods.store`)
+      priority: 10
+      services:
+        - name: argocd-server
+          port: 80
+
+    # Argo CD CLI / gRPC traffic
+    - kind: Rule
+      match: Host(`argocd.yogifoods.store`) && Header(`Content-Type`, `application/grpc`)
+      priority: 11
+      services:
+        - name: argocd-server
+          port: 80
+          scheme: h2c
+
+  tls:
+    secretName: argocd-tls
+
