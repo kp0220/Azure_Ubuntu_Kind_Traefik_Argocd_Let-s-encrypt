@@ -1,0 +1,47 @@
+# monitoring-values.yaml
+
+#  command to use install prometheus using helm
+
+#  helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace -f monitoring-values.yaml
+
+
+
+grafana:
+  enabled: true
+
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+
+  persistence:
+    enabled: true
+    type: pvc
+    size: 10Gi
+    storageClassName: standard
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+
+
+prometheus:
+  enabled: true
+
+  prometheusSpec:
+    retention: 15d
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi
+
+
