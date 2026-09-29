@@ -50,7 +50,7 @@ Install supported/current versions of these tools on the Ubuntu VM:
 - Kind.
 - Helm 3.
 - Azure CLI only if you will use the Azure inspection/configuration commands in the walkthroughs; it is not needed by Kubernetes itself.
-- `curl`, ` git`, and DNS utilities such as `dnsutils` (`dig`).
+- `curl`, `git`, and DNS utilities such as `dnsutils` (`dig`).
 
 The installation method and versions may depend on your organization. After installation, check that each command is available:
 
