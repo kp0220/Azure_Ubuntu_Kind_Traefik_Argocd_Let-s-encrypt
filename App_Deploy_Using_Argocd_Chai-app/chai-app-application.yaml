@@ -12,7 +12,7 @@ metadata:
     # Subscribe to notifications when the app is successfully deployed.
     notifications.argoproj.io/subscribe.on-deployed.email: "<receiver@example.com>" # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
 spec:
-  project: default # ArgoCD project this app belongs to
+  project: chai-app # ArgoCD project this app belongs to
   source:
     repoURL: https://github.com/<your-username>/argocd-demos.git # Git repository containing the app manifests
     targetRevision: main # Git branch, tag, or commit to track
