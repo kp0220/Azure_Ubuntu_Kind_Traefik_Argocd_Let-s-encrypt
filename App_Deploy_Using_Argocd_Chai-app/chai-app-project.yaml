@@ -8,7 +8,7 @@ spec:
   sourceRepos:                 # Which Git repos are allowed for this Project
     - https://github.com/kp0220/Azure_Ubuntu_Kind_Traefik_Argocd_Let-s-encrypt.git
   destinations:                # Which clusters/namespaces apps in this Project can target
-    - namespace: chai-app      # Target namespace for apps in this Project
+    - namespace: chai-app      # Target namespace (application in argocd) for apps in this Project
       server: https://172.18.0.4:6443  # Target cluster server url
   clusterResourceWhitelist:    # Which cluster-wide resources are allowed (e.g., CRDs)
     - group: "*"               # '*' means allow all groups
@@ -17,8 +17,8 @@ spec:
     - group: "*"               # Here also allowing everything
       kind: "*"
   roles:                       # Define roles for RBAC within this Project
-    - name: frontend-admins    # Role name  
-      description: Admins for frontend team
+    - name: chai-app-admins    # Role name  
+      description: Admins for chai-app team
       policies:                # Policies associated with this role
         # syntax: - p, proj:<project-name>:<role-name>, applications, <action>, <project>/<app-name>, permission(allow|deny)
         - p, proj:frontend-team:frontend-admins, applications, *, frontend-team/*, allow  # Full access to all apps in this Project, Here p = policy, proj = project, applications = resource, * = action (all actions), frontend-team/* = resource name pattern, allow = effect (allow or deny)
