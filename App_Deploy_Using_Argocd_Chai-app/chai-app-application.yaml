@@ -12,14 +12,14 @@ metadata:
     # Subscribe to notifications when the app is successfully deployed.
     notifications.argoproj.io/subscribe.on-deployed.email: "heeni.patel@gmail.com" # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
 spec:
-  project: chai-app # ArgoCD project this app belongs to
+  project: chai-app-project # ArgoCD project this app belongs to
   source:
     repoURL: https://github.com/kp0220/Azure_Ubuntu_Kind_Traefik_Argocd_Let-s-encrypt.git # Git repository containing the app manifests
     targetRevision: main # Git branch, tag, or commit to track
     path: App_Deploy_Using_Argocd_Chai-app # Path within the repo where manifests are located
   destination:
     server: https://172.18.0.4:6443 # Kubernetes API server address (in-cluster)
-    namespace: chai-app # Namespace where the app will be deployed
+    namespace: chai-app # Target namespace (application in argocd) for apps in this Project
   syncPolicy:
     automated:
       prune: true # Automatically delete resources that are no longer defined in Git
