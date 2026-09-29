@@ -1,18 +1,31 @@
+# cert-manager API version for issuer resources.
 apiVersion: cert-manager.io/v1
+# Cluster-wide issuer usable by Certificates in any namespace.
 kind: ClusterIssuer
+# Kubernetes resource identity; ClusterIssuer has no namespace.
 metadata:
+  # Referenced by Certificate resources that request production certificates.
   name: letsencrypt-prod
+# ACME account and challenge configuration.
 spec:
   acme:
+    # Contact email for ACME account notices; replace with an email you monitor.
     email: kavit1896@gmail.com
 
+    # Let's Encrypt production endpoint issues browser-trusted certificates.
     server: https://acme-v02.api.letsencrypt.org/directory
 
+    # Secret used to persist the ACME account private key; do not delete casually.
     privateKeySecretRef:
+      # cert-manager creates this Secret in the cluster resource namespace.
       name: letsencrypt-prod-account-key
 
+    # Configure how cert-manager proves control of requested DNS names.
     solvers:
+      # Use the HTTP-01 ACME challenge, which requires public HTTP access on port 80.
       - http01:
+          # Route the temporary challenge Ingress through Traefik.
           ingress:
+            # Must match the IngressClass handled by the Traefik controller.
             ingressClassName: traefik
 

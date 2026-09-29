@@ -1,15 +1,19 @@
+# Requests a TLS certificate from cert-manager.
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: argocd-tls
-  namespace: argocd
+  namespace: argocd # Keep this in the same namespace as the Argo CD Ingress.
 spec:
+  # cert-manager creates this Secret with the issued certificate and private key.
   secretName: argocd-tls
 
+  # Use the production ClusterIssuer; it must already exist and be Ready.
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
 
+  # Must match the public DNS name used by the Argo CD Ingress.
   dnsNames:
     - argocd.yogifoods.store
 

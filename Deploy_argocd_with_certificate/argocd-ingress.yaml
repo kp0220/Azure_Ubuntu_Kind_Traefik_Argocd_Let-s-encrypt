@@ -1,31 +1,47 @@
+# Traefik custom-resource API version for IngressRoute.
 apiVersion: traefik.io/v1alpha1
+# Declares this resource as a Traefik IngressRoute.
 kind: IngressRoute
+# Kubernetes identity and namespace for this route.
 metadata:
+  # Resource name within the argocd namespace.
   name: argocd-server
+  # Keep the route alongside the Argo CD service and TLS Secret.
   namespace: argocd
+# Routing and TLS configuration.
 spec:
+  # Traefik listener that accepts HTTPS traffic.
   entryPoints:
     - websecure
 
   routes:
 
     # Normal HTTPS/UI traffic
+    # Each route uses a Rule to match incoming requests.
     - kind: Rule
+      # Match requests for the Argo CD hostname.
       match: Host(`argocd.yogifoods.store`)
+      # Route priority; higher priority is evaluated before lower priority.
       priority: 10
+      # Destination Kubernetes service for matching requests.
       services:
+        # Argo CD server Service and its HTTP service port.
         - name: argocd-server
           port: 80
 
     # Argo CD CLI / gRPC traffic
     - kind: Rule
+      # Match the same hostname when the request is gRPC.
       match: Host(`argocd.yogifoods.store`) && Header(`Content-Type`, `application/grpc`)
+      # Evaluate this more specific gRPC rule before the general UI rule.
       priority: 11
       services:
         - name: argocd-server
           port: 80
+          # Use cleartext HTTP/2 from Traefik to the Argo CD backend.
           scheme: h2c
 
+  # TLS certificate Secret used for the public HTTPS connection.
   tls:
     secretName: argocd-tls
 
