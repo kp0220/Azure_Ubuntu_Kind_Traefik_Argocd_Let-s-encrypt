@@ -8,18 +8,18 @@ metadata:
   annotations:
     # The email notifier must be configured in argocd-notifications-cm.yaml, The `.email` is the name of the notifier, i.e, `service.email` in the argocd-notifications-cm.yaml.
     # Subscribe to notifications when the app health is degraded.
-    notifications.argoproj.io/subscribe.on-health-degraded.email: "<receiver@example.com>"  # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
+    notifications.argoproj.io/subscribe.on-health-degraded.email: "heeni.patel@gmail.com"  # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
     # Subscribe to notifications when the app is successfully deployed.
-    notifications.argoproj.io/subscribe.on-deployed.email: "<receiver@example.com>" # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
+    notifications.argoproj.io/subscribe.on-deployed.email: "heeni.patel@gmail.com" # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
 spec:
   project: chai-app # ArgoCD project this app belongs to
   source:
-    repoURL: https://github.com/<your-username>/argocd-demos.git # Git repository containing the app manifests
+    repoURL: https://github.com/kp0220/Azure_Ubuntu_Kind_Traefik_Argocd_Let-s-encrypt.git # Git repository containing the app manifests
     targetRevision: main # Git branch, tag, or commit to track
-    path: applicationsets/chai-app # Path within the repo where manifests are located
+    path: App_Deploy_Using_Argocd_Chai-app # Path within the repo where manifests are located
   destination:
-    server: https://kubernetes.default.svc # Kubernetes API server address (in-cluster)
-    namespace: default # Namespace where the app will be deployed
+    server: https://172.18.0.4:6443 # Kubernetes API server address (in-cluster)
+    namespace: chai-app # Namespace where the app will be deployed
   syncPolicy:
     automated:
       prune: true # Automatically delete resources that are no longer defined in Git
