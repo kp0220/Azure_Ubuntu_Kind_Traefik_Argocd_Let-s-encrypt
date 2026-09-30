@@ -1,26 +1,43 @@
+# Kubernetes Deployment API version.
 apiVersion: apps/v1
+# Declares that this resource manages a set of replicated Pods.
 kind: Deployment
+# Metadata for the deployment resource.
 metadata:
+  # Application name used for the deployment object.
   name: online-shop
+  # Namespace where the app should run.
+  namespace: online-shop
+
+# Deployment behavior and Pod template.
 spec:
+  # Number of replicas to keep running for high availability.
   replicas: 5
+  # Selector used to identify which Pods are managed by this Deployment.
   selector:
     matchLabels:
       app: online-shop
+  # Pod template that defines the application container(s).
   template:
     metadata:
+      # Labels applied to Pods created by this Deployment.
       labels:
         app: online-shop
     spec:
       containers:
       - name: online-shop
+        # Container image used for the online shop application.
         image: amitabhdevops/online_shop:latest
         ports:
         - containerPort: 3000
         resources:
           requests:
+            # Minimum memory guaranteed to the container.
             memory: "128Mi"
+            # Minimum CPU guaranteed to the container.
             cpu: "100m"
           limits:
+            # Maximum memory allowed for the container.
             memory: "256Mi"
+            # Maximum CPU allowed for the container.
             cpu: "500m"

@@ -1,14 +1,26 @@
+# cert-manager API version used for Certificate resources.
 apiVersion: cert-manager.io/v1
+# Declares this resource as a TLS certificate request managed by cert-manager.
 kind: Certificate
+# Kubernetes metadata for the certificate object.
 metadata:
+  # Name used to identify the certificate resource.
   name: online-shop-tls
+  # Namespace where the certificate and generated secret will be created.
   namespace: online-shop
+
+# Certificate specification and issuer configuration.
 spec:
+  # Kubernetes Secret name that cert-manager will populate with the issued certificate and key.
   secretName: online-shop-tls
 
+  # Reference to the ACME issuer that will sign this certificate.
   issuerRef:
+    # Name of the ClusterIssuer to use for Let's Encrypt production issuance.
     name: letsencrypt-prod
+    # Issuer type: cluster-scoped issuer definition.
     kind: ClusterIssuer
 
+  # DNS names covered by the certificate.
   dnsNames:
     - app.yogifoods.store

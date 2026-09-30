@@ -1,0 +1,8 @@
+# Kubernetes core API version for namespace resources.
+apiVersion: v1
+# Declares this object as a Kubernetes Namespace.
+kind: Namespace
+# Namespace metadata and naming.
+metadata:
+  # Name of the namespace used to isolate the online shop application resources.
+  name: online-shop

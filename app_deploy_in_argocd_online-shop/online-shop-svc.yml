@@ -1,16 +1,28 @@
+# Kubernetes core API version for Service objects.
 apiVersion: v1
+# Declares this resource as a Kubernetes Service.
 kind: Service
+# Metadata identifying the service within the cluster.
 metadata:
+  # Name used to access this service internally by other resources.
   name: online-shop-service
+  # Namespace where the service is created.
   namespace: online-shop
+
+# Service behavior and routing configuration.
 spec:
+  # Internal cluster-only service type; not exposed externally.
   type: ClusterIP
 
+  # Selects Pods that belong to the online shop application.
   selector:
     app: online-shop
 
+  # Port mapping for traffic forwarded to the application Pods.
   ports:
     - port: 3000
+      # Container port where the app listens for inbound traffic.
       targetPort: 3000
+      # Network protocol used by the service.
       protocol: TCP
 

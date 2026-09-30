@@ -1,0 +1,34 @@
+# chai-app.yaml
+# This file defines an ArgoCD Application resource for deploying the chai-app.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: online-shop # Name of the ArgoCD application
+  namespace: argocd # Namespace where ArgoCD is installed
+  annotations:
+    # The email notifier must be configured in argocd-notifications-cm.yaml, The `.email` is the name of the notifier, i.e, `service.email` in the argocd-notifications-cm.yaml.
+    # Subscribe to notifications when the app health is degraded.
+    notifications.argoproj.io/subscribe.on-health-degraded.email: "heeni.patel@gmail.com"  # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
+    # Subscribe to notifications when the app is successfully deployed.
+    notifications.argoproj.io/subscribe.on-deployed.email: "heeni.patel@gmail.com" # you can add multiple email ids separated by comma like "<receiver@example.com>, <receiver2@example.com>"
+spec:
+  project: online-shop-project # ArgoCD project this app belongs to
+  source:
+    repoURL: https://github.com/kp0220/az_ubuntu_kind_traefik_argocd_letsencrypt.git # Git repository containing the app manifests
+    targetRevision: main # Git branch, tag, or commit to track
+    path: app_deploy_in_argocd_online-shop # Path within the repo where manifests are located
+    directory:
+      # These bootstrap resources belong in argocd and are managed separately from the app workload.
+      exclude: '{online-shop-project.yaml,online-shop-application.yaml}'
+  destination:
+    server: https://172.18.0.4:6443 # Kubernetes API server address (in-cluster)
+    namespace: online-shop # Target namespace (application in argocd) for apps in this Project
+  syncPolicy:
+    automated:
+      prune: true # Automatically delete resources that are no longer defined in Git
+      selfHeal: true # Automatically correct drift between Git and cluster state
+
+# Brief Info:
+# This manifest enables GitOps for online-shop using ArgoCD.
+# Notifications are set up for health degradation and deployment events.
+# Automated sync ensures the cluster matches the desired state in Git.
