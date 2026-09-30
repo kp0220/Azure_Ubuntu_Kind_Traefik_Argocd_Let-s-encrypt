@@ -18,7 +18,7 @@ spec:
   # Rules that match requests and forward them to Kubernetes Services.
   routes:
     # Match requests for the public hostname of the online shop.
-    - match: Host(`app.yogifoods.store`)
+    - match: Host(`onlineshop.yogifoods.store`)
       # Traefik rule type used to evaluate the hostname match expression.
       kind: Rule
 

@@ -23,4 +23,4 @@ spec:
 
   # DNS names covered by the certificate.
   dnsNames:
-    - app.yogifoods.store
+    - onlineshop.yogifoods.store
