@@ -5,10 +5,9 @@ kind: IngressRoute
 # Kubernetes resource identity and namespace.
 metadata:
   # Name used to identify this route resource.
-  name: chai-app-ingressroute``
+  name: chai-app-ingressroute
   # Keep the route with the Chai app Service and TLS Secret.
   namespace: chai-app
-
 # Listener, request routing, and TLS configuration.
 spec:
   # Accept external HTTPS requests through Traefik.
