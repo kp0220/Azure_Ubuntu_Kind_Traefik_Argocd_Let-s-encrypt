@@ -10,7 +10,7 @@ metadata:
 # Desired state for the application Pods.
 spec:
   # Number of application Pod replicas to keep running.
-  replicas: 3
+  replicas: 5
   # Identifies which Pods this Deployment manages.
   selector:
     # Match the same label applied in the Pod template below.
