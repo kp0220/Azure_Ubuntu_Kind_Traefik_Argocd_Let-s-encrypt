@@ -1,0 +1,56 @@
+# Kubernetes API version for Deployment resources.
+apiVersion: apps/v1
+# Manages replicated application Pods and replaces unhealthy ones.
+kind: Deployment
+# Deployment identity within the namespace.
+metadata:
+  # Name referenced by Kubernetes operations and status checks.
+  name: chai-app
+  namespace: chai-app
+# Desired state for the application Pods.
+spec:
+  # Number of application Pod replicas to keep running.
+  replicas: 3
+  # Identifies which Pods this Deployment manages.
+  selector:
+    # Match the same label applied in the Pod template below.
+    matchLabels:
+      app: chai-app
+  # Template used to create each application Pod.
+  template:
+    metadata:
+      # Pod labels used by the Deployment selector and Service.
+      labels:
+        app: chai-app
+    # Pod-level configuration.
+    spec:
+      # Containers that run inside each Pod.
+      containers:
+      # Container name within the Pod.
+      - name: chai-app
+        # Container image and version to deploy.
+        image: kp0220/chai-devops:latest
+        # Ports exposed by the container.
+        ports:
+        # Application listens on port 80; the Service targets this port.
+        - containerPort: 80
+        # Environment variables provided to the container.
+        env:
+        # Variable name expected by the application.
+        - name: VITE_GEMINI_API
+          # Read the value from a Kubernetes Secret instead of embedding it here.
+          valueFrom:
+            # Reference a specific key in the named Secret.
+            secretKeyRef:
+              name: chai-app-secret
+              key: VITE_GEMINI_API
+        # Set minimum scheduling requirements and maximum resource usage.
+        resources:
+          # Resources requested for scheduling each container.
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          # Upper resource limits for each container.
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

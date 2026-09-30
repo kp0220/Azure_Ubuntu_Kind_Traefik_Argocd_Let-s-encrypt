@@ -1,0 +1,54 @@
+# Run Traefik as a Kubernetes Deployment rather than a DaemonSet.
+deployment:
+  # Helm chart workload type.
+  kind: Deployment
+
+# Configure the Kubernetes Service that exposes Traefik's entry points.
+service:
+  # Create a Service for Traefik.
+  enabled: true
+
+  # Service spec fields passed to Kubernetes.
+  spec:
+    # NodePort exposes Traefik through ports on each Kubernetes node.
+    type: NodePort
+
+# Configure Traefik's HTTP and HTTPS entry points.
+ports:
+  # HTTP entry point.
+  web:
+    # Port Traefik listens on inside its pod.
+    port: 8000
+    # Public-facing port name/number used by Traefik's entry point.
+    exposedPort: 80
+    # NodePort reached by the Kind host mapping for VM port 80.
+    nodePort: 30080
+    # Accept TCP connections.
+    protocol: TCP
+
+    # Redirect HTTP requests to the HTTPS entry point.
+    http:
+      redirections:
+        entryPoint:
+          # Destination entry point for the redirect.
+          to: websecure
+          # Use HTTPS in the redirected URL.
+          scheme: https
+          # Send a permanent redirect response.
+          permanent: true
+
+  # HTTPS entry point.
+  websecure:
+    # Port Traefik listens on inside its pod.
+    port: 8443
+    # Public-facing HTTPS port.
+    exposedPort: 443
+    # NodePort reached by the Kind host mapping for VM port 443.
+    nodePort: 30443
+    protocol: TCP
+
+    # Enable TLS handling on the HTTPS entry point.
+    http:
+      tls:
+        enabled: true
+

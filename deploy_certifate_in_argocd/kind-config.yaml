@@ -1,0 +1,33 @@
+# Create a Kind Kubernetes cluster.
+kind: Cluster
+# Kind configuration schema version.
+apiVersion: kind.x-k8s.io/v1alpha4
+
+# Define the Kubernetes nodes that Kind will create.
+nodes:
+  # The control-plane node hosts the host-to-node port mappings below.
+  - role: control-plane
+    # Forward ports between the VM and this Kind node; set these when creating the cluster.
+    extraPortMappings:
+      # Kind node port expected to match Traefik's HTTP NodePort.
+      - containerPort: 30080
+        # Expose HTTP on port 80 of the VM.
+        hostPort: 80
+        # Forward TCP traffic.
+        protocol: TCP
+        # Listen on all VM interfaces; restrict access with the VM firewall/NSG.
+        listenAddress: "0.0.0.0"
+
+      # Kind node port expected to match Traefik's HTTPS NodePort.
+      - containerPort: 30443
+        # Expose HTTPS on port 443 of the VM.
+        hostPort: 443
+        protocol: TCP
+        listenAddress: "0.0.0.0"
+
+  # Worker nodes run application workloads.
+  - role: worker
+
+  # Add a second worker node to the lab cluster.
+  - role: worker
+

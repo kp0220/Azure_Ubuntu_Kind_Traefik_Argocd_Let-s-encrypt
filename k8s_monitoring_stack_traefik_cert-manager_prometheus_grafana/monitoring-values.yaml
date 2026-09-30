@@ -1,0 +1,73 @@
+# monitoring-values.yaml
+
+#  command to use install prometheus using helm
+
+#  helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace -f monitoring-values.yaml
+
+
+
+# Configure Grafana within kube-prometheus-stack.
+grafana:
+  # Deploy Grafana with the monitoring stack.
+  enabled: true
+
+  # Read the Grafana administrator credentials from an existing Kubernetes Secret.
+  admin:
+    # Secret must exist in the monitoring namespace.
+    existingSecret: grafana-admin
+    # Secret key containing the administrator username.
+    userKey: admin-user
+    # Secret key containing the administrator password.
+    passwordKey: admin-password
+
+  # Persist Grafana data across pod restarts.
+  persistence:
+    # Create and mount a PersistentVolumeClaim.
+    enabled: true
+    # Use PVC-backed persistence.
+    type: pvc
+    # Requested persistent disk capacity.
+    size: 10Gi
+    # Must match a StorageClass available in the cluster.
+    storageClassName: standard
+
+  # Keep Grafana internal; public access is configured separately through Traefik.
+  service:
+    # ClusterIP is reachable inside the cluster, not directly from the internet.
+    type: ClusterIP
+    # Service port used by the Ingress or IngressRoute backend.
+    port: 80
+
+  # Disable chart-managed Ingress because this repository defines Traefik routes separately.
+  ingress:
+    enabled: false
+
+
+# Configure Prometheus within kube-prometheus-stack.
+prometheus:
+  # Deploy Prometheus with the monitoring stack.
+  enabled: true
+
+  # Prometheus server-specific settings.
+  prometheusSpec:
+    # Retain metrics for this duration, subject to available storage.
+    retention: 15d
+
+    # Request persistent storage for Prometheus time-series data.
+    storageSpec:
+      # Create a PVC from this volume claim template.
+      volumeClaimTemplate:
+        # Kubernetes PVC specification.
+        spec:
+          # Must match a StorageClass available in the cluster.
+          storageClassName: standard
+          # ReadWriteOnce allows the volume to be mounted read/write by one node at a time.
+          accessModes:
+            - ReadWriteOnce
+          # Requested resources for the Prometheus PVC.
+          resources:
+            # Minimum storage capacity requested.
+            requests:
+              storage: 20Gi
+
+

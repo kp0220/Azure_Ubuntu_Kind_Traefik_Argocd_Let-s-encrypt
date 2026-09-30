@@ -1,0 +1,24 @@
+# Core Kubernetes API version for a Service.
+apiVersion: v1
+# Exposes selected Pods through a stable network endpoint.
+kind: Service
+# Service identity within the Kubernetes namespace.
+metadata:
+  # Name referenced by the app's IngressRoute backend.
+  name: chai-app-service
+  namespace: chai-app
+# Service networking configuration.
+spec:
+  # Select Pods whose labels match these key/value pairs.
+  selector:
+    app: chai-app
+  # Ports exposed by this Service and forwarded to selected Pods.
+  ports:
+  # Port 3000 is the Service port; the IngressRoute sends traffic here.
+  - port: 3000
+    # Forward traffic to port 80 on the selected application containers.
+    targetPort: 80
+    # Use TCP for the application connection.
+    protocol: TCP
+  # ClusterIP exposes this Service only inside the Kubernetes cluster.
+  type: ClusterIP
