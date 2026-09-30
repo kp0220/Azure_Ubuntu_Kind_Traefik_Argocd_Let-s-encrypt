@@ -19,7 +19,7 @@ spec:
     path: app_deploy_in_argocd_online-shop # Path within the repo where manifests are located
     directory:
       # These bootstrap resources belong in argocd and are managed separately from the app workload.
-      exclude: '{online-shop-project.yaml,online-shop-application.yaml}'
+      exclude: '{online-shop-project.yaml,online-shop-application.yaml,*.bkp}'
   destination:
     server: https://172.18.0.4:6443 # Kubernetes API server address (in-cluster)
     namespace: online-shop # Target namespace (application in argocd) for apps in this Project
