@@ -1,8 +1,0 @@
-# Core Kubernetes API version for a Namespace.
-apiVersion: v1
-# Creates an isolated namespace for related Chai app resources.
-kind: Namespace
-# Metadata that identifies the Namespace.
-metadata:
-  # Other manifests use this namespace to group and scope app resources.
-  name: chai-app
