@@ -6,6 +6,7 @@ kind: Service
 metadata:
   # Name referenced by the app's IngressRoute backend.
   name: chai-app-service
+  namespace: chai-app
 # Service networking configuration.
 spec:
   # Select Pods whose labels match these key/value pairs.

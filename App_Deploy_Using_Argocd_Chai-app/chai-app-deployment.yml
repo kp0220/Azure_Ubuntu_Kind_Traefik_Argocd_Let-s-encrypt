@@ -6,6 +6,7 @@ kind: Deployment
 metadata:
   # Name referenced by Kubernetes operations and status checks.
   name: chai-app
+  namespace: chai-app
 # Desired state for the application Pods.
 spec:
   # Number of application Pod replicas to keep running.
