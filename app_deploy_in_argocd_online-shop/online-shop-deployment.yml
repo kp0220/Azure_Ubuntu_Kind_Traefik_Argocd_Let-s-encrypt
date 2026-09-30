@@ -27,7 +27,7 @@ spec:
       containers:
       - name: online-shop
         # Container image used for the online shop application.
-        image: amitabhdevops/online_shop:latest
+        image: kp0220/online_shop:latest
         ports:
         - containerPort: 3000
         resources:
