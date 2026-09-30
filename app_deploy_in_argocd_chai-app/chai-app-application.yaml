@@ -14,9 +14,9 @@ metadata:
 spec:
   project: chai-app-project # ArgoCD project this app belongs to
   source:
-    repoURL: https://github.com/kp0220/Azure_Ubuntu_Kind_Traefik_Argocd_Let-s-encrypt.git # Git repository containing the app manifests
+    repoURL: https://github.com/kp0220/az_ubuntu_kind_traefik_argocd_letsencrypt.git # Git repository containing the app manifests
     targetRevision: main # Git branch, tag, or commit to track
-    path: App_Deploy_Using_Argocd_Chai-app # Path within the repo where manifests are located
+    path: app_deploy_in_argocd_chai-app # Path within the repo where manifests are located
     directory:
       # These bootstrap resources belong in argocd and are managed separately from the app workload.
       exclude: '{chai-app-project.yaml,chai-app-application.yaml}'

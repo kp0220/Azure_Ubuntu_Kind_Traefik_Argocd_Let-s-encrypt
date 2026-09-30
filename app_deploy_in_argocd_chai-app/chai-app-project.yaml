@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Project for chai-app AI  # Optional description
   sourceRepos:                 # Which Git repos are allowed for this Project
-    - https://github.com/kp0220/Azure_Ubuntu_Kind_Traefik_Argocd_Let-s-encrypt.git
+    - https://github.com/kp0220/az_ubuntu_kind_traefik_argocd_letsencrypt.git
   destinations:                # Which clusters/namespaces apps in this Project can target
     - namespace: chai-app      # Target namespace (application in argocd) for apps in this Project
       server: https://172.18.0.4:6443  # Target cluster server url
